@@ -8,18 +8,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//programmerumai0110100111
-//programmerumai0110100111
-//assignmentuser110101
-//nodemon index.js
-console.log(process.env.USER);
-console.log(process.env.PASSWORD);
 
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////mongodbCOPYpaste START
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.yeymv.mongodb.net/?appName=Cluster0`;
-console.log(uri);
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+
+
+                                                          // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -30,18 +24,49 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
+                                                                                  // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-    // Send a ping to confirm a successful connection
+///////// ER NICHE app.post
+
+    const spotsCollection = client.db("spotDB").collection("spot"); // তোমার কালেকশন
+
+
+    //dekhanor kaj Get
+    app.get('/spot', async(req, res) => {
+      const cursor = spotsCollection.find();
+      result = await cursor.toArray();
+       res.send(result);
+    })
+
+    // ✅ `app.post()` রান ফাংশনের ভিতরে
+    app.post('/spot', async (req, res) => {
+      try {
+        const newSpot = req.body;
+        console.log("Received Data:", newSpot);
+
+        // MongoDB-তে ডাটা ইনসার্ট করা
+        const result = await spotsCollection.insertOne(newSpot);
+
+        res.send({ message: "Data inserted successfully!", result ,
+          insertedId: result.insertedId || newData._id
+        });
+      } catch (error) {
+        res.status(500).send({ error: "Failed to insert data", details: error });
+      }
+    });
+
+
+///////// ER UPORE app.post
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+                                                                               // Ensures that the client will close when you finish/error
+    // await client.close(); //pore comment kora jate sobsomoy cholte na thake
   }
 }
 run().catch(console.dir);
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////mongodbCOPYpaste END
 
 
 app.get('/', (req, res) => {
@@ -49,5 +74,14 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`On tERMINAL _  _   UMAI app UMAI on port UMAI ${port}`)
+  console.log(`On123456789...tERMINAL- - -- -  _  _   UMAI app UMAI on port UMAI ${port}`)
+  console.log('server cholce: http://localhost:5000');
 })
+
+console.log(port);
+console.log(port);
+console.log(process.env.USER);
+console.log(process.env.PASSWORD);
+console.log(port);
+console.log(port);
+// OlD CODEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE   OLDDDDDD    OOOOLLLLLDDDDDDDD

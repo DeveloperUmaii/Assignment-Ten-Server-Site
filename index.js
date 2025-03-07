@@ -1,7 +1,8 @@
 const express = require('express')
 const cors = require( 'cors' );
 require('dotenv').config()
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const res = require('express/lib/response');
 const port = process.env.PORT || 5000;
 const app = express();
 
@@ -37,7 +38,6 @@ async function run() {
       result = await cursor.toArray();
        res.send(result);
     })
-
     // ✅ `app.post()` রান ফাংশনের ভিতরে
     app.post('/spot', async (req, res) => {
       try {
@@ -54,7 +54,14 @@ async function run() {
         res.status(500).send({ error: "Failed to insert data", details: error });
       }
     });
-
+// Delete opertion///////
+app.delete('/spot/:id',async (req, res) => {
+      const id = req.params.id;
+      // const query = { _id: new Object(id) };
+      const query = { _id: new ObjectId(id) }; 
+      const result = await spotsCollection.deleteOne(query);
+      res.send(result);
+});
 
 ///////// ER UPORE app.post
     await client.db("admin").command({ ping: 1 });

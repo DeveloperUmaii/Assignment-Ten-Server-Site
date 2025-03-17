@@ -67,6 +67,12 @@ app.put('/spot/:id', async (req, res) => {
               image: updatedData.Updatedimage, // ✅ `image` নামে সংরক্ষণ করা হলো
               SpotName: updatedData.UpdatedSpotName, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
               Country: updatedData.UpdatedSpotCountry, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
+              Location: updatedData.UpdatedSpotLocation, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
+              Season: updatedData.UpdatedSpotSeason, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
+              TravelTime: updatedData.UpdatedSpotTravelTime, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
+              Visitors: updatedData.UpdatedSpotVisitors, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
+              Cost: updatedData.UpdatedSpotCost, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
+              Description: updatedData.UpdatedSpotDescription, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
           }
       };
 

@@ -53,42 +53,32 @@ async function run() {
       }
     });
 
-    // 🔹 Update API ✅ (সমস্যা ছিল এখানে)
-// ✅ Spot Update API (BACKEND - Express)
-app.put('/spot/:id', async (req, res) => {
+///////////////////////////////// Update Operation
+app.put("/SpotUpdate/:id", async (req, res) => {
   try {
-      const id = req.params.id;
-      const filter = { _id: new ObjectId(id) };
-      const options = { returnOriginal: false }; // ✅ নতুন আপডেট হওয়া ডাটা ফেরত দেয়
-      const updatedData = req.body;
+    const id = req.params.id;
+    const updatedData = req.body;
 
-      const updateSpot = {
-          $set: {
-              image: updatedData.Updatedimage, // ✅ `image` নামে সংরক্ষণ করা হলো
-              SpotName: updatedData.UpdatedSpotName, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
-              Country: updatedData.UpdatedSpotCountry, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
-              Location: updatedData.UpdatedSpotLocation, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
-              Season: updatedData.UpdatedSpotSeason, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
-              TravelTime: updatedData.UpdatedSpotTravelTime, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
-              Visitors: updatedData.UpdatedSpotVisitors, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
-              Cost: updatedData.UpdatedSpotCost, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
-              Description: updatedData.UpdatedSpotDescription, // ✅ `SpotName` নামে সংরক্ষণ করা হলো
-          }
-      };
+    // যদি ID ঠিকঠাক না থাকে
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).send({ error: "Invalid Spot ID" });
+    }
 
-      const result = await spotsCollection.findOneAndUpdate(filter, updateSpot, options);
-      
-      if (!result.value) {
-          return res.status(404).send({ message: "Spot not found or not updated" });
-      }
-      
-      res.send(result.value); // ✅ নতুন আপডেট হওয়া ডাটা পাঠানো হলো
+    const filter = { _id: new ObjectId(id) };
+    const updateDoc = { $set: updatedData };
+
+    const result = await spotsCollection.updateOne(filter, updateDoc);
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).send({ message: "Spot not found or not updated" });
+    }
+
+    res.send({ message: "✅ Spot updated successfully!", result });
   } catch (error) {
-      res.status(500).send({ error: "Failed to update spot", details: error });
+    res.status(500).send({ error: "Failed to update spot", details: error });
   }
 });
-
-
+/////////////////////////////////
     // 🔹 নতুন ট্যুরিস্ট স্পট যোগ করা (POST API)
     app.post('/spot', async (req, res) => {
       try {

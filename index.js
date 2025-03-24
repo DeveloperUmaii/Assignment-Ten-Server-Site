@@ -10,6 +10,7 @@ app.use(express.json());
 
 // MongoDB সংযোগ সেটআপ ✅ (সমস্যা ছিল না, তবে ক্লিন করা হয়েছে)
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.yeymv.mongodb.net/?appName=Cluster0`;
+// const uri = 'mongodb+srv://assignmentuser110101:RBEvcPZaW4m8ksVw@cluster0.yeymv.mongodb.net/?appName=Cluster0';
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,

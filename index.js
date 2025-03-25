@@ -21,7 +21,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    await client.connect();
+    // await client.connect();
     console.log("✅ MongoDB Connected Successfully!");
 
     const spotsCollection = client.db("spotDB").collection("spot");
@@ -45,7 +45,7 @@ async function run() {
         const result = await spotsCollection.findOne(filter);
 
         if (!result) {
-          return res.status(404).send({ message: "Spot not found" });
+          return res.send({ message: "Spot not found" });
         }
 
         res.send(result);
